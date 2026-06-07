@@ -160,6 +160,7 @@ Authorization:`Bearer ${SUPABASE_KEY}`
 );
 
 products = await response.json();
+  console.log(products);
 
 products = products.map(product => ({
 name: product.name,
