@@ -142,7 +142,7 @@ Order on WhatsApp
 
 <script>
 
-const SUPABASE_URL = "https://uhhyxilritfvcygnyqyp.supabase.co/rest/v1";
+const SUPABASE_URL = "https://uhhyxilritfvcygnyqyp.supabase.co";
 const SUPABASE_KEY = "sb_publishable_JHgNBbOApKSF0b_7d1YljA_ytdqf_iO";
 
 let products = [];
@@ -150,7 +150,7 @@ let products = [];
 async function loadProducts() {
 
 const response = await fetch(
-`${SUPABASE_URL}/products?select=*`,
+`${SUPABASE_URL}/rest/v1/products?select=*`,
 {
 headers:{
 apikey: SUPABASE_KEY,
