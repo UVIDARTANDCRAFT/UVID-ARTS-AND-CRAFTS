@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>UVID Arts and Crafts</title>
+
+<style>
+
+body{
+font-family:Arial,sans-serif;
+margin:0;
+background:#f5f5f5;
+}
+
+header{
+background:#222;
+color:white;
+padding:15px;
+text-align:center;
+}
+
+.cart-count{
+position:fixed;
+top:15px;
+right:15px;
+background:red;
+color:white;
+padding:8px 12px;
+border-radius:20px;
+}
+
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+padding:20px;
+}
+
+.product{
+background:white;
+padding:15px;
+border-radius:10px;
+box-shadow:0 2px 5px rgba(0,0,0,0.1);
+}
+
+.product img{
+width:100%;
+height:200px;
+object-fit:cover;
+border-radius:8px;
+}
+
+button{
+background:#25D366;
+color:white;
+border:none;
+padding:10px;
+width:100%;
+cursor:pointer;
+border-radius:5px;
+margin-top:10px;
+}
+
+.cart{
+background:white;
+margin:20px;
+padding:20px;
+border-radius:10px;
+}
+
+input{
+width:100%;
+padding:10px;
+margin-top:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>UVID Arts and Crafts</h1>
+<p>Add products and order through WhatsApp</p>
+</header>
+
+<div class="cart-count">
+Cart: <span id="count">0</span>
+</div>
+
+<div class="products">
+
+<div class="product">
+<img src="https://via.placeholder.com/300x200">
+<h3>Painting Brush</h3>
+<p>₹99</p>
+<button onclick="addToCart('Painting Brush',99)">
+Add To Cart
+</button>
+</div>
+
+<div class="product">
+<img src="https://via.placeholder.com/300x200">
+<h3>Acrylic Paint Set</h3>
+<p>₹299</p>
+<button onclick="addToCart('Acrylic Paint Set',299)">
+Add To Cart
+</button>
+</div>
+
+</div>
+
+<div class="cart">
+
+<h2>Your Cart</h2>
+
+<ul id="cartItems"></ul>
+
+<input id="customerName" placeholder="Your Name">
+
+<input id="customerPhone" placeholder="Phone Number">
+
+<button onclick="sendWhatsApp()">
+Order on WhatsApp
+</button>
+
+</div>
+
+<script>
+
+let cart=[];
+
+function addToCart(name,price){
+
+cart.push({name,price});
+
+document.getElementById("count").innerText=cart.length;
+
+renderCart();
+
+}
+
+function renderCart(){
+
+let html="";
+
+cart.forEach(item=>{
+
+html += `<li>${item.name} - ₹${item.price}</li>`;
+
+});
+
+document.getElementById("cartItems").innerHTML=html;
+
+}
+
+function sendWhatsApp(){
+
+let name=document.getElementById("customerName").value;
+let phone=document.getElementById("customerPhone").value;
+
+let message=`Hello UVID Arts and Crafts
+
+Name: ${name}
+Phone: ${phone}
+
+Order:
+
+`;
+
+cart.forEach(item=>{
+message += `${item.name} - ₹${item.price}\n`;
+});
+
+window.open(
+`https://wa.me/919972790229?text=${encodeURIComponent(message)}`
+);
+
+}
+
+</script>
+
+</body>
+</html>
