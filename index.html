@@ -193,7 +193,10 @@ p.name.toLowerCase().includes(search)
 
 html += `
 <div class="product">
+<a href="${product.image}" target="_blank">
 <img src="${product.image}">
+</a>
+
 <h3>${product.name}</h3>
 <div class="price">₹${product.price}</div>
 
