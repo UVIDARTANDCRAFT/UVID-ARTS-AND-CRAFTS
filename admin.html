@@ -79,6 +79,14 @@ Save Product
 Update Product
 </button>
 
+  <h2>Delete Product</h2>
+
+<input id="deleteId" placeholder="Product ID">
+
+<button onclick="deleteProduct()">
+Delete Product
+</button>
+
 <div id="status"></div>
 
 <script>
@@ -214,6 +222,38 @@ document.getElementById("status").innerHTML =
 }
 
 }
+
+async function deleteProduct(){
+
+const id =
+document.getElementById("deleteId").value;
+
+const response =
+await fetch(
+`${SUPABASE_URL}/rest/v1/products?id=eq.${id}`,
+{
+method:"DELETE",
+headers:{
+apikey:SUPABASE_KEY,
+Authorization:`Bearer ${SUPABASE_KEY}`
+}
+}
+);
+
+if(response.ok){
+
+document.getElementById("status").innerHTML =
+"✅ Product Deleted";
+
+}else{
+
+document.getElementById("status").innerHTML =
+"❌ Delete Failed";
+
+}
+
+}
+
 </script>
 
 </body>
