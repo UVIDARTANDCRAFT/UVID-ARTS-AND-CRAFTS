@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>UVID Arts and Crafts</title>
+  
 
 <style>
 body{
@@ -165,6 +166,7 @@ products = await response.json();
 products = products.map(product => ({
 name: product.name,
 price: product.price,
+category: product.category,
 image: `${SUPABASE_URL}/storage/v1/object/public/products/${product.image_path}`
 }));
 
@@ -198,6 +200,7 @@ html += `
 </a>
 
 <h3>${product.name}</h3>
+<div><b>${product.category}</b></div>
 <div class="price">₹${product.price}</div>
 
 <button onclick="addToCart('${product.name}',${product.price})">
