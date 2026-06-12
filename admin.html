@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UVID Admin</title>
+
+<style>
+
+body{
+font-family:Arial,sans-serif;
+max-width:700px;
+margin:auto;
+padding:20px;
+}
+
+h1{
+text-align:center;
+}
+
+input{
+width:100%;
+padding:12px;
+margin:10px 0;
+box-sizing:border-box;
+}
+
+button{
+width:100%;
+padding:12px;
+background:#25D366;
+color:white;
+border:none;
+cursor:pointer;
+font-size:16px;
+}
+
+#status{
+margin-top:15px;
+font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>UVID Admin Panel</h1>
+
+<input id="name" placeholder="Product Name">
+
+<input id="price" type="number" placeholder="Price">
+
+<input id="photo" type="file">
+
+<button onclick="saveProduct()">
+Save Product
+</button>
+
+<div id="status"></div>
+
+<script>
+
+const SUPABASE_URL = "https://uhhyxilritfvcygnyqyp.supabase.co";
+
+const SUPABASE_KEY = "sb_publishable_JHgNBbOApKSF0b_7d1YljA_ytdqf_iO";
+
+function saveProduct(){
+
+document.getElementById("status").innerHTML =
+"Admin page working successfully.";
+
+}
+
+</script>
+
+</body>
+</html>
