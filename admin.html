@@ -60,6 +60,8 @@ throw new Error("Unauthorized");
 <input id="name" placeholder="Product Name">
 
 <input id="price" type="number" placeholder="Price">
+  
+  <input id="category" placeholder="Category">
 
 <input id="photo" type="file">
 
@@ -74,6 +76,8 @@ Save Product
 <input id="editName" placeholder="New Product Name">
 
 <input id="editPrice" type="number" placeholder="New Price">
+
+  <input id="editCategory" placeholder="New Category">
 
 <button onclick="updateProduct()">
 Update Product
@@ -102,6 +106,9 @@ document.getElementById("name").value;
 
 const price =
 document.getElementById("price").value;
+
+  const category =
+document.getElementById("category").value;
 
 const file =
 document.getElementById("photo").files[0];
@@ -159,6 +166,7 @@ Prefer:"return=representation"
 body:JSON.stringify({
 name:name,
 price:Number(price),
+category:category,
 image_path:fileName
 })
 }
@@ -171,6 +179,7 @@ document.getElementById("status").innerHTML =
 
 document.getElementById("name").value="";
 document.getElementById("price").value="";
+  document.getElementById("category").value="";
 document.getElementById("photo").value="";
 
 }else{
@@ -192,6 +201,9 @@ document.getElementById("editName").value;
 const price =
 document.getElementById("editPrice").value;
 
+  const category =
+document.getElementById("editCategory").value;
+
 const response =
 await fetch(
 `${SUPABASE_URL}/rest/v1/products?id=eq.${id}`,
@@ -204,7 +216,8 @@ Authorization:`Bearer ${SUPABASE_KEY}`,
 },
 body:JSON.stringify({
 name:name,
-price:Number(price)
+price:Number(price),
+category:category
 })
 }
 );
