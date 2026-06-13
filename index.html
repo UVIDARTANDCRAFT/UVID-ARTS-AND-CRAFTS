@@ -119,6 +119,14 @@ placeholder="Search products..."
 onkeyup="renderProducts()">
 </div>
 
+  <select id="categoryFilter" onchange="renderProducts()">
+<option value="">All Categories</option>
+<option value="Brushes">Brushes</option>
+<option value="Paints">Paints</option>
+<option value="Canvas">Canvas</option>
+<option value="Tools">Tools</option>
+</select>
+
 <div id="products" class="products"></div>
 
 <div class="cart-box">
@@ -187,9 +195,16 @@ document.getElementById("search")
 
 let html="";
 
+const selectedCategory =
+document.getElementById("categoryFilter").value;
+
 products
 .filter(p =>
 p.name.toLowerCase().includes(search)
+)
+.filter(p =>
+selectedCategory === "" ||
+p.category === selectedCategory
 )
 .forEach(product=>{
 
