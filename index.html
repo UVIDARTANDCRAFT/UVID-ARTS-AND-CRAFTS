@@ -175,6 +175,7 @@ products = await response.json();
 products = products.map(product => ({
 name: product.name,
 price: product.price,
+stock: product.stock,
 category: product.category,
 image: `${SUPABASE_URL}/storage/v1/object/public/products/${product.image_path}`
 }));
@@ -217,6 +218,7 @@ html += `
 
 <h3>${product.name}</h3>
 <div><b>${product.category}</b></div>
+<div>Stock: ${product.stock}</div>
 <div class="price">₹${product.price}</div>
 
 <button onclick="addToCart('${product.name}',${product.price})">
