@@ -121,10 +121,11 @@ onkeyup="renderProducts()">
 
   <select id="categoryFilter" onchange="renderProducts()">
 <option value="">All Categories</option>
-<option value="Brushes">Brushes</option>
-<option value="Paints">Paints</option>
-<option value="Canvas">Canvas</option>
-<option value="Tools">Tools</option>
+<option value="BRUSHES">BRUSHES</option>
+<option value="PAINTS">PAINTS</option>
+<option value="CANVAS">CANVAS</option>
+<option value="TOOLS">TOOLS</option>
+<option value="PIPECLEANERS">PIPECLEANERS</option>
 </select>
 
 <div id="products" class="products"></div>
@@ -204,7 +205,7 @@ p.name.toLowerCase().includes(search)
 )
 .filter(p =>
 selectedCategory === "" ||
-p.category === selectedCategory
+(p.category || "").toLowerCase() === selectedCategory.toLowerCase()
 )
 .forEach(product=>{
 
