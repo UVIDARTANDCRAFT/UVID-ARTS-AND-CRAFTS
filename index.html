@@ -145,6 +145,11 @@ class="checkout"
 id="customerPhone"
 placeholder="Phone Number">
 
+  <input
+class="checkout"
+id="customerAddress"
+placeholder="Delivery Address">
+
 <button onclick="checkoutWhatsApp()">
 Order on WhatsApp
 </button>
@@ -296,11 +301,15 @@ document.getElementById("customerName").value;
 let customerPhone =
 document.getElementById("customerPhone").value;
 
+  let customerAddress =
+document.getElementById("customerAddress").value;
+
 let message =
 `Hello UVID Arts and Crafts
 
 Name: ${customerName}
 Phone: ${customerPhone}
+Address: ${customerAddress}
 
 Order:
 
