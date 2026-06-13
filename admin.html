@@ -60,6 +60,8 @@ throw new Error("Unauthorized");
 <input id="name" placeholder="Product Name">
 
 <input id="price" type="number" placeholder="Price">
+
+  <input id="stock" type="number" placeholder="Stock Quantity">
   
   <input id="category" placeholder="Category">
 
@@ -76,6 +78,8 @@ Save Product
 <input id="editName" placeholder="New Product Name">
 
 <input id="editPrice" type="number" placeholder="New Price">
+
+  <input id="editStock" type="number" placeholder="New Stock Quantity">
 
   <input id="editCategory" placeholder="New Category">
 
@@ -106,6 +110,9 @@ document.getElementById("name").value;
 
 const price =
 document.getElementById("price").value;
+
+  const stock =
+document.getElementById("stock").value;
 
   const category =
 document.getElementById("category").value;
@@ -166,6 +173,7 @@ Prefer:"return=representation"
 body:JSON.stringify({
 name:name,
 price:Number(price),
+stock:Number(stock),
 category:category,
 image_path:fileName
 })
@@ -179,6 +187,7 @@ document.getElementById("status").innerHTML =
 
 document.getElementById("name").value="";
 document.getElementById("price").value="";
+  document.getElementById("stock").value="";
   document.getElementById("category").value="";
 document.getElementById("photo").value="";
 
@@ -201,6 +210,9 @@ document.getElementById("editName").value;
 const price =
 document.getElementById("editPrice").value;
 
+  const stock =
+document.getElementById("editStock").value;
+
   const category =
 document.getElementById("editCategory").value;
 
@@ -217,6 +229,7 @@ Authorization:`Bearer ${SUPABASE_KEY}`,
 body:JSON.stringify({
 name:name,
 price:Number(price),
+stock:Number(stock),
 category:category
 })
 }
