@@ -261,16 +261,30 @@ function renderCart(){
 
 let html="";
 
-cart.forEach(item=>{
+cart.forEach((item,index)=>{
 
 html += `
-<li>${item.name} - ₹${item.price}</li>
+<li>
+${item.name} - ₹${item.price}
+<button onclick="removeFromCart(${index})">❌</button>
+</li>
 `;
 
 });
 
 document.getElementById("cartItems")
 .innerHTML = html;
+
+}
+
+  function removeFromCart(index){
+
+cart.splice(index,1);
+
+document.getElementById("cartCount")
+.innerText = cart.length;
+
+renderCart();
 
 }
 
