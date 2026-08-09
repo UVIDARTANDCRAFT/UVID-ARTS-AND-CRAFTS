@@ -293,7 +293,7 @@ renderCart();
 
 }
 
-function checkoutWhatsApp(){
+async function checkoutWhatsApp(){
 
 let customerName =
 document.getElementById("customerName").value;
@@ -301,8 +301,77 @@ document.getElementById("customerName").value;
 let customerPhone =
 document.getElementById("customerPhone").value;
 
-  let customerAddress =
+let customerAddress =
 document.getElementById("customerAddress").value;
+
+if(!customerName || !customerPhone || !customerAddress){
+
+alert("Please fill Name, Phone Number and Address");
+
+return;
+
+}
+
+if(cart.length === 0){
+
+alert("Your cart is empty");
+
+return;
+
+}
+
+let orderProducts = "";
+
+let total = 0;
+
+cart.forEach(item=>{
+
+orderProducts += `${item.name} - ₹${item.price}\n`;
+
+total += Number(item.price);
+
+});
+
+const orderResponse = await fetch(
+`${SUPABASE_URL}/rest/v1/orders`,
+{
+method:"POST",
+
+headers:{
+apikey: SUPABASE_KEY,
+Authorization: `Bearer ${SUPABASE_KEY}`,
+"Content-Type":"application/json",
+Prefer:"return=representation"
+},
+
+body:JSON.stringify({
+
+customer_name: customerName,
+
+customer_phone: customerPhone,
+
+customer_address: customerAddress,
+
+products: orderProducts,
+
+total: total,
+
+status: "Pending"
+
+})
+
+}
+);
+
+if(!orderResponse.ok){
+
+alert("❌ Order could not be saved");
+
+console.log(await orderResponse.text());
+
+return;
+
+}
 
 let message =
 `Hello UVID Arts and Crafts
@@ -313,13 +382,8 @@ Address: ${customerAddress}
 
 Order:
 
-`;
-
-cart.forEach(item=>{
-
-message += `${item.name} - ₹${item.price}\n`;
-
-});
+${orderProducts}
+Total: ₹${total}`;
 
 window.open(
 `https://wa.me/919972790229?text=${encodeURIComponent(message)}`
