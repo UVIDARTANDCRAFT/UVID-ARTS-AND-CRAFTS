@@ -96,7 +96,13 @@ Delete Product
 </button>
 
 <div id="status"></div>
+<h2>Customer Orders</h2>
 
+<button onclick="loadOrders()">
+View Orders
+</button>
+
+<div id="orders"></div>
 <script>
 
 const SUPABASE_URL = "https://uhhyxilritfvcygnyqyp.supabase.co";
@@ -279,7 +285,86 @@ document.getElementById("status").innerHTML =
 }
 
 }
+ async function loadOrders(){
 
+document.getElementById("orders").innerHTML =
+"Loading orders...";
+
+const response = await fetch(
+`${SUPABASE_URL}/rest/v1/orders?select=*&order=created_at.desc`,
+{
+headers:{
+apikey: SUPABASE_KEY,
+Authorization: `Bearer ${SUPABASE_KEY}`
+}
+}
+);
+
+if(!response.ok){
+
+document.getElementById("orders").innerHTML =
+"❌ Failed to load orders";
+
+console.log(await response.text());
+
+return;
+
+}
+
+const orders = await response.json();
+
+if(orders.length === 0){
+
+document.getElementById("orders").innerHTML =
+"No orders found.";
+
+return;
+
+}
+
+let html = "";
+
+orders.forEach(order=>{
+
+html += `
+<div style="
+background:white;
+padding:15px;
+margin:15px 0;
+border-radius:10px;
+box-shadow:0 2px 5px rgba(0,0,0,.1);
+">
+
+<h3>Order #${order.id}</h3>
+
+<p><b>Customer:</b> ${order.customer_name}</p>
+
+<p><b>Phone:</b> ${order.customer_phone}</p>
+
+<p><b>Address:</b> ${order.customer_address}</p>
+
+<p><b>Products:</b><br>
+${order.products.replace(/\n/g,"<br>")}
+</p>
+
+<p><b>Total:</b> ₹${order.total}</p>
+
+<p><b>Status:</b> ${order.status}</p>
+
+<p>
+<small>
+${new Date(order.created_at).toLocaleString()}
+</small>
+</p>
+
+</div>
+`;
+
+});
+
+document.getElementById("orders").innerHTML = html;
+
+}
 </script>
 
 </body>
