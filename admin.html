@@ -351,6 +351,14 @@ ${order.products.replace(/\n/g,"<br>")}
 
 <p><b>Status:</b> ${order.status}</p>
 
+<select onchange="updateOrderStatus(${order.id}, this.value)">
+<option value="Pending" ${order.status === "Pending" ? "selected" : ""}>Pending</option>
+<option value="Confirmed" ${order.status === "Confirmed" ? "selected" : ""}>Confirmed</option>
+<option value="Shipped" ${order.status === "Shipped" ? "selected" : ""}>Shipped</option>
+<option value="Delivered" ${order.status === "Delivered" ? "selected" : ""}>Delivered</option>
+<option value="Cancelled" ${order.status === "Cancelled" ? "selected" : ""}>Cancelled</option>
+</select>
+
 <p>
 <small>
 ${new Date(order.created_at).toLocaleString()}
@@ -363,6 +371,36 @@ ${new Date(order.created_at).toLocaleString()}
 });
 
 document.getElementById("orders").innerHTML = html;
+
+}
+  async function updateOrderStatus(id, status){
+
+const response = await fetch(
+`${SUPABASE_URL}/rest/v1/orders?id=eq.${id}`,
+{
+method:"PATCH",
+headers:{
+apikey: SUPABASE_KEY,
+Authorization: `Bearer ${SUPABASE_KEY}`,
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+status:status
+})
+}
+);
+
+if(response.ok){
+
+alert("✅ Order status updated");
+
+}else{
+
+alert("❌ Failed to update order status");
+
+console.log(await response.text());
+
+}
 
 }
 </script>
