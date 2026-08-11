@@ -91,7 +91,19 @@ padding:10px 15px;
 border-radius:30px;
 font-weight:bold;
 }
-
+#cartNotification{
+    position:fixed;
+    top:70px;
+    right:15px;
+    background:#25D366;
+    color:white;
+    padding:12px 20px;
+    border-radius:8px;
+    font-weight:bold;
+    display:none;
+    z-index:9999;
+    box-shadow:0 3px 10px rgba(0,0,0,.2);
+}
 input.checkout{
 width:100%;
 padding:10px;
@@ -129,7 +141,7 @@ onkeyup="renderProducts()">
 </select>
 
 <div id="products" class="products"></div>
-
+<div id="cartNotification"></div>
 <div class="cart-box">
 <h2>Your Cart</h2>
 
@@ -276,9 +288,22 @@ price: price,
 productId: product.id,
 quantity: 1
 });
-document.getElementById("cartCount").innerText = cart.length;
+document.getElementById("cartCount").innerText =
+cart.reduce((total,item) => total + item.quantity, 0);
 
 renderCart();
+
+const notification =
+document.getElementById("cartNotification");
+
+notification.innerText =
+"✅ " + name + " added to cart!";
+
+notification.style.display = "block";
+
+setTimeout(() => {
+    notification.style.display = "none";
+}, 2500);
 
 }
 function renderCart(){
