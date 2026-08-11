@@ -244,7 +244,25 @@ ${product.stock > 0
 
 ${product.stock > 0
 ? `
-<button onclick="addToCart('${product.name}',${product.price})">
+<div style="display:flex;align-items:center;gap:10px;margin-top:10px;">
+
+<button
+onclick="changeProductQuantity(${product.id}, -1)"
+style="width:auto;margin:0;padding:8px 14px;">
+−
+</button>
+
+<strong id="qty-${product.id}">1</strong>
+
+<button
+onclick="changeProductQuantity(${product.id}, 1)"
+style="width:auto;margin:0;padding:8px 14px;">
++
+</button>
+
+</div>
+
+<button onclick="addSelectedToCart(${product.id})">
 Add To Cart
 </button>
 `
@@ -263,7 +281,58 @@ document.getElementById("products")
 .innerHTML = html;
 
 }
+function changeProductQuantity(productId, change){
 
+const product = products.find(p => p.id === productId);
+
+if(!product){
+return;
+}
+
+const quantityElement =
+document.getElementById("qty-" + productId);
+
+let quantity =
+Number(quantityElement.innerText);
+
+quantity += change;
+
+if(quantity < 1){
+quantity = 1;
+}
+
+if(quantity > Number(product.stock)){
+quantity = Number(product.stock);
+}
+
+quantityElement.innerText = quantity;
+
+}
+
+
+function addSelectedToCart(productId){
+
+const product = products.find(p => p.id === productId);
+
+if(!product){
+return;
+}
+
+const quantityElement =
+document.getElementById("qty-" + productId);
+
+const quantity =
+Number(quantityElement.innerText);
+
+for(let i = 0; i < quantity; i++){
+
+addToCart(product.name, product.price);
+
+}
+
+quantityElement.innerText = 1;
+
+}
 function addToCart(name, price){
 
 const product = products.find(p => p.name === name);
