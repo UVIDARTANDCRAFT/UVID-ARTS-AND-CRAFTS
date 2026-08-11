@@ -107,8 +107,8 @@ margin:10px 0;
 <p>Order directly on WhatsApp</p>
 </header>
 
-<div class="cart-count">
-Cart: <span id="cartCount">0</span>
+<div class="cart-count" onclick="goToCart()">
+🛒 Cart: <span id="cartCount">0</span>
 </div>
 
 <div class="search-box">
@@ -325,7 +325,21 @@ style="width:auto;padding:5px 10px;">
 
 document.getElementById("cartItems").innerHTML = html;
 
-}function increaseQuantity(index){
+}
+
+
+// ADD THIS HERE
+function goToCart(){
+
+    document.querySelector(".cart-box").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+
+}
+
+
+function increaseQuantity(index){
 
 const item = cart[index];
 
