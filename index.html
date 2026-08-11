@@ -273,9 +273,9 @@ return;
 cart.push({
 name: name,
 price: price,
-productId: product.id
+productId: product.id,
+quantity: 1
 });
-
 document.getElementById("cartCount").innerText = cart.length;
 
 renderCart();
@@ -283,21 +283,87 @@ renderCart();
 }
 function renderCart(){
 
-let html="";
+let html = "";
 
 cart.forEach((item,index)=>{
 
 html += `
 <li>
-${item.name} - ₹${item.price}
-<button onclick="removeFromCart(${index})">❌</button>
+<strong>${item.name}</strong> - ₹${item.price}
+
+<br>
+
+Quantity:
+
+<button onclick="decreaseQuantity(${index})"
+style="width:auto;padding:5px 10px;">
+−
+</button>
+
+<strong>${item.quantity}</strong>
+
+<button onclick="increaseQuantity(${index})"
+style="width:auto;padding:5px 10px;">
++
+</button>
+
+<br>
+
+Subtotal: ₹${item.price * item.quantity}
+
+<button onclick="removeFromCart(${index})"
+style="width:auto;padding:5px 10px;">
+❌
+</button>
+
 </li>
+
+<br>
 `;
 
 });
 
-document.getElementById("cartItems")
-.innerHTML = html;
+document.getElementById("cartItems").innerHTML = html;
+
+}function increaseQuantity(index){
+
+const item = cart[index];
+
+const product = products.find(
+p => p.id === item.productId
+);
+
+if(!product){
+return;
+}
+
+if(item.quantity >= Number(product.stock)){
+alert("❌ Maximum available stock reached.");
+return;
+}
+
+item.quantity++;
+
+renderCart();
+
+}function decreaseQuantity(index){
+
+if(cart[index].quantity > 1){
+
+cart[index].quantity--;
+
+}else{
+
+cart.splice(index,1);
+
+}
+
+document.getElementById("cartCount").innerText = cart.reduce(
+(total,item) => total + item.quantity,
+0
+);
+
+renderCart();
 
 }
 
@@ -345,9 +411,11 @@ let total = 0;
 
 cart.forEach(item=>{
 
-orderProducts += `${item.name} - ₹${item.price}\n`;
+const itemTotal = Number(item.price) * Number(item.quantity);
 
-total += Number(item.price);
+orderProducts += `${item.name} - ₹${item.price} × ${item.quantity} = ₹${itemTotal}\n`;
+
+total += itemTotal;
 
 });
 
@@ -401,7 +469,8 @@ if(!product){
 continue;
 }
 
-const newStock = Number(product.stock) - 1;
+const newStock =
+Number(product.stock) - Number(item.quantity);
 
 const stockResponse = await fetch(
 `${SUPABASE_URL}/rest/v1/products?id=eq.${item.productId}`,
